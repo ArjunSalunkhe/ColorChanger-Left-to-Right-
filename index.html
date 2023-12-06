@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Changer from left to right</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        .center{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 400px;
+            height: 200px;
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="center"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+
+        let cen = document.querySelector(".center");
+        
+        cen.addEventListener("mousemove",(dets)=>{
+            let react = cen.getBoundingClientRect();
+            let innerreactX = dets.x - react.x;
+            if(innerreactX < react.width/3){
+                let redcolor = gsap.utils.mapRange(0,react.width/2, 255, 0, innerreactX);
+
+                gsap.to(".center",{
+                    backgroundColor : `rgb(${redcolor},0,0)`
+                })                
+                console.log("left");
+            }else{
+                let bluecolor = gsap.utils.mapRange(react.width/2,react.width,0,255, innerreactX);
+                gsap.to(".center",{
+                    backgroundColor : `rgb(0,0,${bluecolor})`
+                })
+            }
+
+        })
+    
+        cen.addEventListener("mouseleave",()=>{
+            gsap.to(".center",{
+                backgroundColor :"white"
+            })
+        })
+
+
+
+    </script>
+</body>
+</html>
